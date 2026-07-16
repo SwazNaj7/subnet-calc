@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="dark">
+	<title>Subnet Calculator</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="page-shell">
+		<header class="hero-card">
+			<div class="hero-copy">
+				<h1>Calculate subnet details with a teaching-first binary breakdown.</h1>
+				<p class="hero-text">Enter an IP address and either a CIDR prefix or subnet mask to inspect the full subnet, host range, and bit-level split.</p>
+			</div>
+		</header>
+
+		<main class="layout-grid">
+			<section class="panel input-panel" aria-labelledby="input-title">
+				<div class="panel-header">
+					<div>
+						<h2 id="input-title">Input</h2>
+					</div>
+					<span class="status-pill status-pill--ready">Ready for parsing</span>
+				</div>
+
+				<div class="mode-switch" role="tablist" aria-label="Subnet input mode">
+					<button type="button" class="mode-switch__button mode-switch__button--active" aria-pressed="true">CIDR mode</button>
+					<button type="button" class="mode-switch__button" aria-pressed="false">Mask mode</button>
+				</div>
+
+				<form class="input-form" autocomplete="off">
+					<label class="field">
+						<span>IP address</span>
+						<input type="text" value="192.168.1.0" placeholder="192.168.1.0" aria-describedby="ip-help">
+					</label>
+
+					<label class="field field--compact">
+						<span>CIDR prefix</span>
+						<input type="text" value="24" placeholder="24" aria-describedby="prefix-help">
+					</label>
+
+					<label class="field field--compact field--hidden" aria-hidden="true">
+						<span>Subnet mask</span>
+						<input type="text" value="255.255.255.0" placeholder="255.255.255.0" tabindex="-1">
+					</label>
+
+					<p id="ip-help" class="field-help">Validation and conversion logic will be added in the next milestone.</p>
+					<p id="prefix-help" class="field-help">Use a value between 0 and 32.</p>
+				</form>
+			</section>
+
+			<section class="panel results-panel" aria-labelledby="results-title">
+				<div class="panel-header">
+					<div>
+						<h2 id="results-title">Subnet results</h2>
+					</div>
+					<span class="status-pill">Placeholder values</span>
+				</div>
+
+				<div class="results-grid">
+					<article class="result-card">
+						<span class="result-label">Network address</span>
+						<strong>192.168.1.0</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">Broadcast address</span>
+						<strong>192.168.1.255</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">Subnet mask</span>
+						<strong>255.255.255.0 / 24</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">Wildcard mask</span>
+						<strong>0.0.0.255</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">Total hosts</span>
+						<strong>256</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">Usable hosts</span>
+						<strong>254</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">First usable host</span>
+						<strong>192.168.1.1</strong>
+					</article>
+					<article class="result-card">
+						<span class="result-label">Last usable host</span>
+						<strong>192.168.1.254</strong>
+					</article>
+				</div>
+			</section>
+
+			<section class="panel binary-panel" aria-labelledby="binary-title">
+				<div class="panel-header">
+					<div>
+						<h2 id="binary-title">Binary breakdown</h2>
+					</div>
+					<span class="status-pill">Educational view</span>
+				</div>
+
+				<div class="binary-legend" aria-label="Binary color key">
+					<span class="binary-legend__item"><span class="binary-legend__swatch binary-legend__swatch--network" aria-hidden="true"></span>Network bits</span>
+					<span class="binary-legend__item"><span class="binary-legend__swatch binary-legend__swatch--host" aria-hidden="true"></span>Host bits</span>
+				</div>
+
+				<div class="binary-stack">
+					<div class="binary-block" data-binary-source="ip">
+						<div class="binary-block__heading">
+							<h3>IP address</h3>
+							<span class="binary-hint">Network bits and host bits will be color-coded later.</span>
+						</div>
+						<div class="binary-row" aria-hidden="true">
+							<span class="binary-bit binary-bit--network">11000000</span>
+							<span class="binary-bit binary-bit--network">10101000</span>
+							<span class="binary-bit binary-bit--network">00000001</span>
+							<span class="binary-bit binary-bit--host">00000000</span>
+						</div>
+					</div>
+
+					<div class="binary-block" data-binary-source="mask">
+						<div class="binary-block__heading">
+							<h3>Subnet mask</h3>
+							<span class="binary-hint">The prefix will be mirrored here once parsing is wired up.</span>
+						</div>
+						<div class="binary-row" aria-hidden="true">
+							<span class="binary-bit binary-bit--network">11111111</span>
+							<span class="binary-bit binary-bit--network">11111111</span>
+							<span class="binary-bit binary-bit--network">11111111</span>
+							<span class="binary-bit binary-bit--host">00000000</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<aside class="panel info-panel" aria-labelledby="info-title">
+				<div class="panel-header">
+					<div>
+						<h2 id="info-title">Address type</h2>
+					</div>
+					<span class="status-pill">Pending detection</span>
+				</div>
+
+				<div class="info-card">
+					<span class="info-card__label">Classification</span>
+					<strong>Waiting for valid input</strong>
+					<p>Enter a valid IPv4 address to classify it as private, public, loopback, multicast, or another special-use range.</p>
+				</div>
+
+				<div class="info-card info-card--muted">
+					<span class="info-card__label">Stretch goals</span>
+					<strong>VLSM mode</strong>
+					<p>Subnet splitting and a visual block diagram will be added only after the core calculator is stable.</p>
+				</div>
+			</aside>
+		</main>
+	</div>
+	<script src="script.js" defer></script>
+</body>
+</html>
